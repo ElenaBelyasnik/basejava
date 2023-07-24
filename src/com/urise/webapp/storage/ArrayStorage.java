@@ -8,7 +8,8 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    private final Resume[] storage = new Resume[10000];
+    private final int storageLength = 10_000;
+    private final Resume[] storage = new Resume[storageLength];
     private int size;
 
     public void clear() {
@@ -18,7 +19,7 @@ public class ArrayStorage {
 
     public void update(Resume resume) {
         String uuid = resume.getUuid();
-        int index = findUuid(uuid);
+        int index = findIndex(uuid);
         if (index >= 0) {
             storage[index] = resume;
         } else {
@@ -27,33 +28,27 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        if (size + 1 < storage.length) {
-            String uuid = r.getUuid();
-            int index = findUuid(uuid);
-            if (index == -1) {
-                storage[size] = r;
-                size++;
-
-            } else {
-                System.out.println("ERROR: already have a resume with uuid = " + uuid);
-            }
-        } else {
+        if (size + 1 >= storage.length) {
             System.out.println("ERROR: array size out of bounds");
+        } else if (findIndex(r.getUuid()) >= 0) {
+            System.out.println("ERROR: already have a resume with uuid = " + r.getUuid());
+        } else {
+            storage[size] = r;
+            size++;
         }
     }
 
     public Resume get(String uuid) {
-        int index = findUuid(uuid);
+        int index = findIndex(uuid);
         if (index >= 0) {
             return storage[index];
-        } else {
-            System.out.println("ERROR: there is no resume with uuid = " + uuid);
         }
+        System.out.println("ERROR: there is no resume with uuid = " + uuid);
         return null;
     }
 
     public void delete(String uuid) {
-        int index = findUuid(uuid);
+        int index = findIndex(uuid);
         if (index >= 0) {
             size--;
             storage[index] = storage[size];
@@ -72,7 +67,7 @@ public class ArrayStorage {
         return size;
     }
 
-    private int findUuid(String uuid) {
+    private int findIndex(String uuid) {
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
                 return i;
