@@ -6,14 +6,15 @@ import java.util.Arrays;
 
 public class SortedArrayStorage extends AbstractArrayStorage  {
     @Override
-    protected void addResume(Resume r, int index) {
+    protected void insertElement(Resume r, int index) {
+// http://codereview.stackexchange.com/questions/36221/binary-search-for-inserting-in-array#answer-36239
         int newIndex = -index - 1;
         System.arraycopy(storage, newIndex, storage, newIndex + 1, size - newIndex);
         storage[newIndex] = r;
     }
 
     @Override
-    protected void removeResume(int index) {
+    protected void fillDeletedElement(int index) {
         if (index < size) {
             System.arraycopy(storage, index + 1, storage, index, size - index);
         }
