@@ -11,7 +11,7 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public abstract class AbstractArrayStorage implements Storage {
-    protected static final int STORAGE_LIMIT = 6;
+    protected static final int STORAGE_LIMIT = 10_000;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
@@ -22,7 +22,7 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public final void update(Resume r) {
-        int index = getIndex(r.getUuid());
+        int index = getSearchKey(r.getUuid());
         if (index < 0) {
             throw new NotExistStorageException(r.getUuid());
         } else {
@@ -31,7 +31,7 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public final void save(Resume r) {
-        int index = getIndex(r.getUuid());
+        int index = getSearchKey(r.getUuid());
         if (index >= 0) {
             throw new ExistStorageException(r.getUuid());
         } else if (size == STORAGE_LIMIT) {
@@ -43,7 +43,7 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public final Resume get(String uuid) {
-        int index = getIndex(uuid);
+        int index = getSearchKey(uuid);
         if (index < 0) {
             throw new NotExistStorageException(uuid);
        }
@@ -51,7 +51,7 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
     public final void delete(String uuid) {
-        int index = getIndex(uuid);
+        int index = getSearchKey(uuid);
         if (index < 0) {
             throw new NotExistStorageException(uuid);
             //System.out.println("ERROR: there is no resume with uuid = " + uuid);
@@ -75,7 +75,7 @@ public abstract class AbstractArrayStorage implements Storage {
     }
 
 
-    protected abstract int getIndex(String uuid);
+    protected abstract int getSearchKey(String uuid);
     protected abstract void insertElement(Resume r, int index);
     protected abstract void fillDeletedElement(int index);
 }
