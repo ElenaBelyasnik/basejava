@@ -8,6 +8,8 @@ import java.util.List;
 public class ListStorage extends AbstractStorage {
     private final List<Resume> list = new ArrayList<>();
 
+
+
     @Override
     protected Integer getKey(String uuid) {
         for (int i = 0; i < list.size(); i++) {
@@ -44,18 +46,18 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    public void clear() {
+    public void nativeClear() {
         list.clear();
     }
 
     @Override
-    public Resume[] getAll() {
+    public Resume[] nativeGetAll() {
         Resume[] resumes = new Resume[list.size()];
         return list.toArray(resumes);
     }
 
     @Override
-    public int size() {
+    public int nativeSize() {
         return list.size();
     }
 }

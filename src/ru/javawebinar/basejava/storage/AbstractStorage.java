@@ -7,6 +7,7 @@ import ru.javawebinar.basejava.model.Resume;
 public abstract class AbstractStorage implements Storage {
     protected abstract Object getKey(String uuid);
 
+    protected abstract void nativeClear();
     protected abstract boolean isExistKey(Object key);
 
     protected abstract void nativeUpdate(Resume r, Object key);
@@ -17,16 +18,21 @@ public abstract class AbstractStorage implements Storage {
 
     protected abstract Resume nativeGet(Object key);
 
+    protected abstract Resume[] nativeGetAll();
+
+    protected abstract int nativeSize();
+
+    public void clear(){
+        nativeClear();
+    }
+
     public void update(Resume r) {
         Object key = getExistKey(r.getUuid());
         nativeUpdate(r, key);
     }
 
     public void save(Resume r) {
-        Object key = getKey(r.getUuid());
-        if (isExistKey(key)) {
-            throw new ExistStorageException(r.getUuid());
-        }
+        Object key = getNotExistKey(r.getUuid());
         nativeSave(r, key);
     }
 
@@ -40,10 +46,26 @@ public abstract class AbstractStorage implements Storage {
         return nativeGet(key);
     }
 
+    public Resume[] getAll() {
+        return nativeGetAll();
+    }
+
+    public int size() {
+        return nativeSize();
+    }
+
     private Object getExistKey(String uuid) {
         Object key = getKey(uuid);
         if (!isExistKey(key)) {
             throw new NotExistStorageException(uuid);
+        }
+        return key;
+    }
+
+    private Object getNotExistKey(String uuid) {
+        Object key = getKey(uuid);
+        if (isExistKey(key)) {
+            throw new ExistStorageException(uuid);
         }
         return key;
     }
