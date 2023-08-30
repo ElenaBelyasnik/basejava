@@ -14,18 +14,18 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    public void nativeClear() {
+    public void doClear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
     @Override
-    public void nativeUpdate(Resume r, Object key) {
+    public void doUpdate(Resume r, Object key) {
         storage[(Integer) key] = r;
     }
 
     @Override
-    public void nativeSave(Resume r, Object key) {
+    public void doSave(Resume r, Object key) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", r.getUuid());
         } else {
@@ -35,12 +35,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume nativeGet(Object key) {
+    public Resume doGet(Object key) {
         return storage[(Integer) key];
     }
 
     @Override
-    public void nativeDelete(Object key) {
+    public void doDelete(Object key) {
         size--;
         fillDeletedElement((int) key);
         storage[size] = null;
@@ -49,11 +49,11 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    public Resume[] nativeGetAll() {
+    public Resume[] doGetAll() {
         return Arrays.copyOf(storage, size);
     }
 
-    public int nativeSize() {
+    public int doSize() {
         return size;
     }
 
