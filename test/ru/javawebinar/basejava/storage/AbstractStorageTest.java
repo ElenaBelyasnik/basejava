@@ -24,11 +24,11 @@ class AbstractStorageTest {
     private static final Resume RESUME_DUMMY;
 
     static {
-        RESUME_1 = new Resume(UUID_1);
-        RESUME_2 = new Resume(UUID_2);
-        RESUME_3 = new Resume(UUID_3);
-        RESUME_4 = new Resume(UUID_4);
-        RESUME_DUMMY = new Resume(UUID_DUMMY);
+        RESUME_1 = new Resume(UUID_1, "Name1");
+        RESUME_2 = new Resume(UUID_2, "Name2");
+        RESUME_3 = new Resume(UUID_3, "Name3");
+        RESUME_4 = new Resume(UUID_4, "Name4");
+        RESUME_DUMMY = new Resume(UUID_DUMMY, "Dummy_name");
     }
 
     public AbstractStorageTest(Storage storage) {
@@ -51,7 +51,7 @@ class AbstractStorageTest {
 
     @Test
     void update() {
-        Resume updatingResume = new Resume(UUID_1);
+        Resume updatingResume = new Resume(UUID_1, "New Name");
         storage.update(updatingResume);
         assertSame(updatingResume, storage.get(UUID_1));
     }
