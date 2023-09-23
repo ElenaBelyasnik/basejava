@@ -6,12 +6,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListStorage extends AbstractStorage {
-    private final List<Resume> resumeList = new ArrayList<>();
+    private final List<Resume> list = new ArrayList<>();
 
     @Override
-    protected Integer getKey(String uuid) {
-        for (int i = 0; i < resumeList.size(); i++) {
-            if (resumeList.get(i).getUuid().equals(uuid)) {
+    protected Integer getSearchKey(String uuid) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getUuid().equals(uuid)) {
                 return i;
             }
         }
@@ -19,43 +19,43 @@ public class ListStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExistKey(Object key) {
-        return key != null;
+    protected boolean isExistSearchKey(Object searchKey) {
+        return searchKey != null;
     }
 
     @Override
-    protected void doUpdate(Resume r, Object key) {
-        resumeList.set((Integer) key, r);
+    protected void doUpdate(Resume r, Object searchKey) {
+        list.set((Integer) searchKey, r);
     }
 
     @Override
     protected void doSave(Resume r, Object key) {
-        resumeList.add(r);
+        list.add(r);
     }
 
     @Override
-    protected void doDelete(Object key) {
-        resumeList.remove(((Integer) key).intValue());
+    protected void doDelete(Object searchKey) {
+        list.remove(((Integer) searchKey).intValue());
     }
 
     @Override
-    protected Resume doGet(Object key) {
-        return resumeList.get((Integer) key);
+    protected Resume doGet(Object searchKey) {
+        return list.get((Integer) searchKey);
     }
 
     @Override
     public void doClear() {
-        resumeList.clear();
+        list.clear();
     }
 
     @Override
     public Resume[] doGetAll() {
-        Resume[] resumes = new Resume[resumeList.size()];
-        return resumeList.toArray(resumes);
+        Resume[] resumes = new Resume[list.size()];
+        return list.toArray(resumes);
     }
 
     @Override
     public int doSize() {
-        return resumeList.size();
+        return list.size();
     }
 }

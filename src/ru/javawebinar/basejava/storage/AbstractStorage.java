@@ -5,11 +5,11 @@ import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
-    protected abstract Object getKey(String uuid);
+    protected abstract Object getSearchKey(String uuid);
 
     protected abstract void doClear();
-
-    protected abstract boolean isExistKey(Object key);
+ 
+    protected abstract boolean isExistSearchKey(Object key);
 
     protected abstract void doUpdate(Resume r, Object key);
 
@@ -28,22 +28,22 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public void update(Resume r) {
-        Object key = getExistKey(r.getUuid());
-        doUpdate(r, key);
+        Object searchKey = getExistedSearchKey(r.getUuid());
+        doUpdate(r, searchKey);
     }
 
     public void save(Resume r) {
-        Object key = getNotExistKey(r.getUuid());
+        Object key = getNotExistedSearchKey(r.getUuid());
         doSave(r, key);
     }
 
     public void delete(String uuid) {
-        Object key = getExistKey(uuid);
+        Object key = getExistedSearchKey(uuid);
         doDelete(key);
     }
 
     public Resume get(String uuid) {
-        Object key = getExistKey(uuid);
+        Object key = getExistedSearchKey(uuid);
         return doGet(key);
     }
 
@@ -55,19 +55,19 @@ public abstract class AbstractStorage implements Storage {
         return doSize();
     }
 
-    private Object getExistKey(String uuid) {
-        Object key = getKey(uuid);
-        if (!isExistKey(key)) {
+    private Object getExistedSearchKey(String uuid) {
+        Object searchKey = getSearchKey(uuid);
+        if (!isExistSearchKey(searchKey)) {
             throw new NotExistStorageException(uuid);
         }
-        return key;
+        return searchKey;
     }
 
-    private Object getNotExistKey(String uuid) {
-        Object key = getKey(uuid);
-        if (isExistKey(key)) {
+    private Object getNotExistedSearchKey(String uuid) {
+        Object searchKey = getSearchKey(uuid);
+        if (isExistSearchKey(searchKey)) {
             throw new ExistStorageException(uuid);
         }
-        return key;
+        return searchKey;
     }
 }

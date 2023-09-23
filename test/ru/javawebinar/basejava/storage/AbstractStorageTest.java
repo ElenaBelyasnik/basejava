@@ -10,7 +10,7 @@ import ru.javawebinar.basejava.model.Resume;
 import static org.junit.jupiter.api.Assertions.*;
 
 class AbstractStorageTest {
-    private final Storage storage;
+    protected Storage storage;
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
