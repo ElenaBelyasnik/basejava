@@ -2,8 +2,7 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 public class MapUuidStorage extends AbstractStorage {
     Map<String, Resume> resumeMap = new TreeMap<>();
@@ -43,11 +42,22 @@ public class MapUuidStorage extends AbstractStorage {
         return resumeMap.get((String) key);
     }
 
+/*
     @Override
     protected Resume[] doGetAll() {
         Map<String, Resume> treeMap = new TreeMap<>(resumeMap);
         Resume[] resumes = new Resume[treeMap.size()];
         return treeMap.values().toArray(resumes);
+    }
+*/
+
+    @Override
+    protected List<Resume> doGetAll() {
+        return resumeMap.entrySet()
+                .parallelStream()
+                .collect(ArrayList<Resume>::new
+                        ,(list1, element) -> list1.add(element.getValue())
+                        , ArrayList::addAll);
     }
 
     @Override
