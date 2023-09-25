@@ -37,8 +37,8 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public void save(Resume r) {
-        Object key = getNotExistedSearchKey(r.getUuid());
-        doSave(r, key);
+        Object searchKey = getNotExistedSearchKey(r.getUuid());
+        doSave(r, searchKey);
     }
 
     public void delete(String uuid) {

@@ -2,7 +2,7 @@
 *.iml
 out
 log
-lib
+lib1
 
 # Compiled class file
 *.class

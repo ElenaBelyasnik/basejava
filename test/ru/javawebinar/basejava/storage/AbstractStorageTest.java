@@ -12,7 +12,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AbstractStorageTest {
+public abstract class AbstractStorageTest {
     protected Storage storage;
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
@@ -83,21 +83,6 @@ class AbstractStorageTest {
 
         assertEquals(exceptionMessage, thrown.getMessage());
     }
-
-/*
-    @Test
-    public void saveOverflow(){
-        String exceptionMessage = "Storage overflow";
-        storage.clear();
-        for (int i = 0; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
-            storage.save(new Resume());
-        }
-        StorageException thrown = assertThrows(StorageException.class,
-                () -> storage.save(new Resume()));
-
-        assertEquals(exceptionMessage, thrown.getMessage());
-    }
-*/
 
     @Test
     void delete() {
