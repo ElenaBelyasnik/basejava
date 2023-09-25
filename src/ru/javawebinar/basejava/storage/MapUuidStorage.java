@@ -5,7 +5,7 @@ import ru.javawebinar.basejava.model.Resume;
 import java.util.*;
 
 public class MapUuidStorage extends AbstractStorage {
-    Map<String, Resume> resumeMap = new TreeMap<>();
+    Map<String, Resume> map = new HashMap<>();
 
     @Override
     protected Object getSearchKey(String uuid) {
@@ -14,32 +14,32 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     protected void doClear() {
-        resumeMap.clear();
+        map.clear();
     }
 
     @Override
-    protected boolean isExistSearchKey(Object key) {
-        return resumeMap.containsKey((String) key);
+    protected boolean isExistSearchKey(Object uuid) {
+        return map.containsKey((String) uuid);
     }
 
     @Override
     protected void doUpdate(Resume r, Object key) {
-        resumeMap.replace((String) key, r);
+        map.replace((String) key, r);
     }
 
     @Override
-    protected void doSave(Resume r, Object key) {
-        resumeMap.put(r.getUuid(), r);
+    protected void doSave(Resume r, Object uuid) {
+        map.put((String) uuid, r);
     }
 
     @Override
-    protected void doDelete(Object key) {
-        resumeMap.remove((String) key);
+    protected void doDelete(Object uuid) {
+        map.remove((String) uuid);
     }
 
     @Override
-    protected Resume doGet(Object key) {
-        return resumeMap.get((String) key);
+    protected Resume doGet(Object uuid) {
+        return map.get((String) uuid);
     }
 
 /*
@@ -53,15 +53,11 @@ public class MapUuidStorage extends AbstractStorage {
 
     @Override
     protected List<Resume> doGetAll() {
-        return resumeMap.entrySet()
-                .parallelStream()
-                .collect(ArrayList<Resume>::new
-                        ,(list1, element) -> list1.add(element.getValue())
-                        , ArrayList::addAll);
+        return new ArrayList<>(map.values());
     }
 
     @Override
     protected int doSize() {
-        return resumeMap.size();
+        return map.size();
     }
 }
