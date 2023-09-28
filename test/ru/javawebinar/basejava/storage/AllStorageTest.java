@@ -1,16 +1,16 @@
 package ru.javawebinar.basejava.storage;
 
 
-import org.junit.runner.RunWith;
-import org.junit.runners.Suite;
+import org.junit.platform.suite.api.SelectClasses;
+import org.junit.platform.suite.api.Suite;
 
-@RunWith(Suite.class)
-@Suite.SuiteClasses({
-                ArrayStorageTest.class,
-                SortedArrayStorageTest.class,
-                MapUuidStorageTest.class,
-                ListStorageTest.class,
-                MapResumeStorageTest.class
+@Suite
+@SelectClasses({
+        ArrayStorageTest.class,
+        SortedArrayStorageTest.class,
+        MapUuidStorageTest.class,
+        ListStorageTest.class,
+        MapResumeStorageTest.class
 })
 public class AllStorageTest {
 }
