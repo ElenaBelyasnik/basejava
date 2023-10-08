@@ -7,24 +7,23 @@ import ru.javawebinar.basejava.model.Resume;
 import java.util.Comparator;
 import java.util.List;
 
-public abstract class AbstractStorage implements Storage {
+public abstract class AbstractStorage<SK> implements Storage {
     protected final Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getUuid);
 
-    protected abstract Object getSearchKey(String uuid);
+    protected abstract SK getSearchKey(String uuid);
 
     protected abstract void doClear();
 
-    protected abstract boolean isExistSearchKey(Object key);
+    protected abstract boolean isExistSearchKey(SK key);
 
-    protected abstract void doUpdate(Resume r, Object key);
+    protected abstract void doUpdate(Resume r, SK key);
 
-    protected abstract void doSave(Resume r, Object key);
+    protected abstract void doSave(Resume r, SK key);
 
-    protected abstract void doDelete(Object key);
+    protected abstract void doDelete(SK key);
 
-    protected abstract Resume doGet(Object key);
+    protected abstract Resume doGet(SK key);
 
-    //protected abstract Resume[] doGetAll();
     protected abstract List<Resume> doGetAll();
 
     protected abstract int doSize();
@@ -34,33 +33,28 @@ public abstract class AbstractStorage implements Storage {
     }
 
     public void update(Resume r) {
-        Object searchKey = getExistedSearchKey(r.getUuid());
+        SK searchKey = getExistedSearchKey(r.getUuid());
         doUpdate(r, searchKey);
     }
 
     public void save(Resume r) {
-        Object searchKey = getNotExistedSearchKey(r.getUuid());
+        SK searchKey = getNotExistedSearchKey(r.getUuid());
         doSave(r, searchKey);
     }
 
     public void delete(String uuid) {
-        Object key = getExistedSearchKey(uuid);
+        SK key = getExistedSearchKey(uuid);
         doDelete(key);
     }
 
     public Resume get(String uuid) {
-        Object key = getExistedSearchKey(uuid);
+        SK key = getExistedSearchKey(uuid);
         return doGet(key);
     }
-
-/*    public Resume[] getAll() {
-        return doGetAll();
-    }*/
 
     @Override
     public List<Resume> getAllSorted() {
         List<Resume> resumeList = doGetAll();
-        //Collections.sort(resumeList);
         resumeList.sort(RESUME_COMPARATOR);
         return resumeList;
     }
@@ -69,16 +63,16 @@ public abstract class AbstractStorage implements Storage {
         return doSize();
     }
 
-    private Object getExistedSearchKey(String uuid) {
-        Object searchKey = getSearchKey(uuid);
+    private SK getExistedSearchKey(String uuid) {
+        SK searchKey = getSearchKey(uuid);
         if (!isExistSearchKey(searchKey)) {
             throw new NotExistStorageException(uuid);
         }
         return searchKey;
     }
 
-    private Object getNotExistedSearchKey(String uuid) {
-        Object searchKey = getSearchKey(uuid);
+    private SK getNotExistedSearchKey(String uuid) {
+        SK searchKey = getSearchKey(uuid);
         if (isExistSearchKey(searchKey)) {
             throw new ExistStorageException(uuid);
         }

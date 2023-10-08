@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Array based storage for Resumes
  */
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected static final int STORAGE_LIMIT = 10_000;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
@@ -21,12 +21,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public void doUpdate(Resume r, Object key) {
+    public void doUpdate(Resume r, Integer key) {
         storage[(Integer) key] = r;
     }
 
     @Override
-    public void doSave(Resume r, Object key) {
+    public void doSave(Resume r, Integer key) {
         if (size == STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", r.getUuid());
         } else {
@@ -36,12 +36,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    public Resume doGet(Object key) {
-        return storage[(Integer) key];
+    public Resume doGet(Integer key) {
+        return storage[key];
     }
 
     @Override
-    public void doDelete(Object key) {
+    public void doDelete(Integer key) {
         size--;
         fillDeletedElement((int) key);
         storage[size] = null;
@@ -50,12 +50,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-/*
-    public Resume[] doGetAll() {
-        return Arrays.copyOf(storage, size);
-    }
-*/
-
     @Override
     protected List<Resume> doGetAll() {
         return Arrays.asList(Arrays.copyOfRange(storage, 0, size));
@@ -66,8 +60,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
     }
 
     @Override
-    protected boolean isExistSearchKey(Object key) {
-        return (Integer) key >= 0;
+    protected boolean isExistSearchKey(Integer key) {
+        return key >= 0;
     }
 
     protected abstract Integer getSearchKey(String uuid);
