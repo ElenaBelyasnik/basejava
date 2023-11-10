@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.model.ResumeTestData;
 
 import java.util.Arrays;
 import java.util.List;
@@ -27,11 +28,18 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME_DUMMY;
 
     static {
+/*
         RESUME_1 = new Resume(UUID_1, "Name1");
         RESUME_2 = new Resume(UUID_2, "Name2");
         RESUME_3 = new Resume(UUID_3, "Name3");
         RESUME_4 = new Resume(UUID_4, "Name4");
         RESUME_DUMMY = new Resume(UUID_DUMMY, "Dummy_name");
+*/
+        RESUME_1 = ResumeTestData.addResumeTestData(UUID_1, "Name1");
+        RESUME_2 = ResumeTestData.addResumeTestData(UUID_2, "Name2");
+        RESUME_3 = ResumeTestData.addResumeTestData(UUID_3, "Name3");
+        RESUME_4 = ResumeTestData.addResumeTestData(UUID_4, "Name4");
+        RESUME_DUMMY = ResumeTestData.addResumeTestData(UUID_DUMMY, "dummy");
     }
 
     public AbstractStorageTest(Storage storage) {
