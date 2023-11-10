@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
-import ru.javawebinar.basejava.model.ResumeTestData;
+import ru.javawebinar.basejava.ResumeTestData;
 
 import java.util.Arrays;
 import java.util.List;

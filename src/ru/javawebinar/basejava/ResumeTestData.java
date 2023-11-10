@@ -1,4 +1,6 @@
-package ru.javawebinar.basejava.model;
+package ru.javawebinar.basejava;
+
+import ru.javawebinar.basejava.model.*;
 
 import java.time.Month;
 
