@@ -1,3 +1,5 @@
+package ru.javawebinar.basejava;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
