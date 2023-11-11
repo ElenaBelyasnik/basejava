@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class AbstractFileStorage extends AbstractStorage<File> {
-    private File directory;
+    private final File directory;
 
     protected AbstractFileStorage(File directory) {
         Objects.requireNonNull(directory, "directory must not be null");
@@ -31,10 +31,11 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
     @Override
     protected void doClear() {
         File[] files = directory.listFiles();
-        if (files != null) {
-            for (File file : files) {
-                doDelete(file);
-            }
+        if (files == null) {
+            throw new StorageException("Directory read error", null);
+        }
+        for (File file : files) {
+            doDelete(file);
         }
     }
 
@@ -48,7 +49,7 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
         try {
             doWrite(r, file);
         } catch (IOException e) {
-            throw new StorageException("File write error", r.getUuid(), e );
+            throw new StorageException("File write error", r.getUuid(), e);
         }
     }
 
@@ -65,14 +66,16 @@ public abstract class AbstractFileStorage extends AbstractStorage<File> {
 
     @Override
     protected void doDelete(File file) {
-
+        if (!file.delete()) {
+            throw new StorageException("File delete error " + file.getName(), file.getName());
+        }
     }
 
     @Override
     protected Resume doGet(File file) {
-        try{
+        try {
             return doRead(file);
-        }catch (IOException e) {
+        } catch (IOException e) {
             throw new StorageException("File read error", file.getName(), e);
         }
     }
