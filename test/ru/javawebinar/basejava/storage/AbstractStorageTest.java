@@ -8,13 +8,17 @@ import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.ResumeTestData;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractStorageTest {
+    protected static final File STORAGE_DIR = new File("C:\\ELENA\\basejava\\storage");
+
     protected Storage storage;
+
     private static final String UUID_1 = "uuid1";
     private static final String UUID_2 = "uuid2";
     private static final String UUID_3 = "uuid3";
@@ -28,13 +32,6 @@ public abstract class AbstractStorageTest {
     private static final Resume RESUME_DUMMY;
 
     static {
-/*
-        RESUME_1 = new Resume(UUID_1, "Name1");
-        RESUME_2 = new Resume(UUID_2, "Name2");
-        RESUME_3 = new Resume(UUID_3, "Name3");
-        RESUME_4 = new Resume(UUID_4, "Name4");
-        RESUME_DUMMY = new Resume(UUID_DUMMY, "Dummy_name");
-*/
         RESUME_1 = ResumeTestData.addResumeTestData(UUID_1, "Name1");
         RESUME_2 = ResumeTestData.addResumeTestData(UUID_2, "Name2");
         RESUME_3 = ResumeTestData.addResumeTestData(UUID_3, "Name3");
@@ -62,9 +59,11 @@ public abstract class AbstractStorageTest {
 
     @Test
     void update() {
-        Resume updatingResume = new Resume(UUID_1, "New Name");
+        //Resume updatingResume = new Resume(UUID_1, "New Name");
+        Resume updatingResume = ResumeTestData.addResumeTestData(UUID_1, "New Name");
         storage.update(updatingResume);
-        assertSame(updatingResume, storage.get(UUID_1));
+        //assertSame(updatingResume, storage.get(UUID_1));
+        assertEquals(updatingResume, storage.get(UUID_1));
     }
 
     @Test
