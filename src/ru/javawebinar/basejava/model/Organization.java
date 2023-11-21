@@ -8,7 +8,7 @@ import java.util.Objects;
 
 public class Organization  implements Serializable {
     private final Link homePage;
-    private List<Position> positions;
+    private final List<Position> positions;
 
     public Organization(String name, String url, Position... positions) {
         this(new Link(name, url), Arrays.asList(positions));

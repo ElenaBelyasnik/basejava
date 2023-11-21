@@ -9,13 +9,14 @@ import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.ResumeTestData;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractStorageTest {
-    protected static final File STORAGE_DIR = new File("C:\\ELENA\\basejava\\storage");
+    protected static final File STORAGE_DIR = new File("..\\basejava\\storage");
 
     protected Storage storage;
 
@@ -92,7 +93,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    void delete() {
+    void delete() throws IOException {
         storage.delete(UUID_1);
         assertSize(2);
         String exceptionMessage = "Resume " + RESUME_1.getUuid() + " not exists";

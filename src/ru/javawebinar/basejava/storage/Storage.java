@@ -2,6 +2,7 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public interface Storage {
 
     Resume get(String uuid);
 
-    void delete(String uuid);
+    void delete(String uuid) throws IOException;
 
     /**
      * @return array, contains only Resumes in storage (without null)

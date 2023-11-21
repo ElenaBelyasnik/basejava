@@ -2,8 +2,10 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
+import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
+import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
 import java.util.logging.Logger;
@@ -24,7 +26,7 @@ public abstract class AbstractStorage<SK> implements Storage {
 
     protected abstract void doSave(Resume r, SK key);
 
-    protected abstract void doDelete(SK key);
+    protected abstract void doDelete(SK key) throws IOException;
 
     protected abstract Resume doGet(SK key);
 
@@ -51,7 +53,11 @@ public abstract class AbstractStorage<SK> implements Storage {
     public void delete(String uuid) {
         LOG.info("Delete " + uuid);
         SK key = getExistedSearchKey(uuid);
-        doDelete(key);
+        try {
+            doDelete(key);
+        } catch (IOException e) {
+            throw new StorageException("AbstractStorage.delete error", null);
+        }
     }
 
     public Resume get(String uuid) {
