@@ -31,7 +31,6 @@ public class MainFile {
             System.out.println(name);
         }
 
-
         try (FileInputStream fis = new FileInputStream(filePath)){
             System.out.println(fis.read());
         } catch (IOException e) {
@@ -48,13 +47,13 @@ public class MainFile {
                 new FileVisitor<>() {
                     @Override
                     public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-                        System.out.println("Directory ======================================: " + dir);
+                        System.out.println("D: " + dir);
                         return FileVisitResult.CONTINUE;
                     }
 
                     @Override
                     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                        System.out.println(file.getFileName());
+                        System.out.println("  F: " + file.getFileName());
                         return FileVisitResult.CONTINUE;
                     }
 

@@ -45,7 +45,7 @@ public abstract class AbstractStorageTest {
     }
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws IOException {
         storage.clear();
         storage.save(RESUME_1);
         storage.save(RESUME_2);
@@ -53,7 +53,7 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    void clear() {
+    void clear() throws IOException {
         storage.clear();
         assertSize(0);
     }

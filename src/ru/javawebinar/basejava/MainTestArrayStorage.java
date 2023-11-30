@@ -3,6 +3,8 @@ package ru.javawebinar.basejava;
 import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.storage.ArrayStorage;
 
+import java.io.IOException;
+
 /**
  * Test for your com.urise.webapp.storage.ArrayStorage implementation
  */
@@ -10,7 +12,7 @@ public class MainTestArrayStorage {
     //private  static final SortedArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
     private  static final ArrayStorage ARRAY_STORAGE = new ArrayStorage();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         final Resume r1 = new Resume("uuid1");
         final Resume r2 = new Resume("uuid2");
         final Resume r3 = new Resume("uuid3");

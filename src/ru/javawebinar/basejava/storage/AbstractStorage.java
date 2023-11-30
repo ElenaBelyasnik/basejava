@@ -56,7 +56,7 @@ public abstract class AbstractStorage<SK> implements Storage {
         try {
             doDelete(key);
         } catch (IOException e) {
-            throw new StorageException("AbstractStorage.delete error", null);
+            throw new StorageException("AbstractStorage.delete error");
         }
     }
 
