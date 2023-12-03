@@ -5,9 +5,12 @@ import ru.javawebinar.basejava.model.Resume;
 import ru.javawebinar.basejava.storage.serializer.StreamSerializer;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 public class FileStorage extends AbstractStorage<File> {
     private final File directory;
@@ -32,11 +35,7 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     protected void doClear() {
-        File[] files = directory.listFiles();
-        if (files == null) {
-            throw new StorageException("Directory read error");
-        }
-        for (File file : files) {
+        for (File file : getFilesList()) {
             doDelete(file);
         }
     }
@@ -83,10 +82,7 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     protected List<Resume> doGetAll() {
-        File[] files = directory.listFiles();
-        if (files == null) {
-            throw new StorageException("Directory read error");
-        }
+        File[] files = getFilesList();
         List<Resume> list = new ArrayList<>(files.length);
         for (File file : files) {
             list.add(doGet(file));
@@ -96,10 +92,15 @@ public class FileStorage extends AbstractStorage<File> {
 
     @Override
     protected int doSize() {
-        String[] list = directory.list();
-        if (list == null) {
-            throw new StorageException("Directory list error");
-        }
-        return list.length;
+        return getFilesList().length;
     }
+
+    private File[] getFilesList() {
+        File[] list = directory.listFiles();
+        if (list == null) {
+            throw new StorageException("Directory read error");
+        }
+        return list;
+    }
+
 }

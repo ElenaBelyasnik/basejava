@@ -6,10 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.*;
 import java.nio.file.attribute.BasicFileAttributes;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class MainFile {
     public static void main(String[] args) throws IOException {
@@ -37,38 +36,24 @@ public class MainFile {
             throw new RuntimeException(e);
         }
 */
-        Path path = Paths.get("..\\basejava\\src");
-        Set<FileVisitOption> options = new HashSet<>();
-
-        Files.walkFileTree(
-                path,
-                options,
-                Integer.MAX_VALUE,
-                new FileVisitor<>() {
-                    @Override
-                    public FileVisitResult preVisitDirectory(Path dir, BasicFileAttributes attrs) throws IOException {
-                        System.out.println("D: " + dir);
-                        return FileVisitResult.CONTINUE;
-                    }
-
-                    @Override
-                    public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                        System.out.println("  F: " + file.getFileName());
-                        return FileVisitResult.CONTINUE;
-                    }
-
-                    @Override
-                    public FileVisitResult visitFileFailed(Path file, IOException exc) throws IOException {
-                        return FileVisitResult.CONTINUE;
-                    }
-
-                    @Override
-                    public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-                        if (exc != null) throw exc;
-                        return FileVisitResult.CONTINUE;
-                    }
-                }
-        );
+        printTree(Paths.get("./src/ru/javawebinar/basejava"), "");
     }
 
+    public static void printTree(Path path, String mask) throws IOException {
+        System.out.println(path.getFileName());
+        if (path.toFile().isDirectory())
+            try (Stream<Path> pathStream = Files.list(path)) {
+                List<Path> pathList = pathStream
+                        .sorted(Comparator.comparing((Path p) -> !p.toFile().isDirectory())
+                                .thenComparing(Path::getFileName)).toList();
+                for (int i = 0; i < pathList.size(); i++) {
+                    System.out.printf("%s%s───", mask, i == pathList.size() - 1 ? "└" : "├");
+                    printTree(pathList.get(i),
+                            String.format("%s%s", mask,
+                                    i == pathList.size() - 1 ? "    " : "│   "));
+                }
+            } catch (AccessDeniedException ex) {
+                //ignore
+            }
+    }
 }
