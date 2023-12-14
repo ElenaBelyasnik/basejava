@@ -7,8 +7,11 @@ import java.util.List;
 import java.util.Objects;
 
 public class Organization  implements Serializable {
-    private final Link homePage;
-    private final List<Position> positions;
+    private Link homePage;
+    private List<Position> positions;
+
+    public Organization() {
+    }
 
     public Organization(String name, String url, Position... positions) {
         this(new Link(name, url), Arrays.asList(positions));
@@ -54,9 +57,12 @@ public class Organization  implements Serializable {
     }
 
     public static class Position  implements Serializable {
-        private final Period period;
-        private final String title;
-        private final String description;
+        private Period period;
+        private String title;
+        private String description;
+
+        public Position() {
+        }
 
         public Position(Period period, String title, String description) {
             Objects.requireNonNull(title, "title must not be null");
