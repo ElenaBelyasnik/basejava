@@ -1,11 +1,14 @@
 package ru.javawebinar.basejava.model;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Organization  implements Serializable {
     private Link homePage;
     private List<Position> positions;
@@ -55,7 +58,7 @@ public class Organization  implements Serializable {
                 ", positions=" + positions +
                 '}';
     }
-
+    @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position  implements Serializable {
         private Period period;
         private String title;

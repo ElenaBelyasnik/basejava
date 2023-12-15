@@ -5,18 +5,20 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.model.Resume;
+import ru.javawebinar.basejava.model.*;
 import ru.javawebinar.basejava.ResumeTestData;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.Month;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractStorageTest {
-    protected static final File STORAGE_DIR = new File("..\\basejava\\storage");
+//    protected static final File STORAGE_DIR = new File("..\\basejava\\storage");
+    protected static final File STORAGE_DIR = new File("C:\\ELENA\\basejava\\storage");
 
     protected Storage storage;
 
@@ -38,6 +40,7 @@ public abstract class AbstractStorageTest {
         RESUME_3 = ResumeTestData.addResumeTestData(UUID_3, "Name3");
         RESUME_4 = ResumeTestData.addResumeTestData(UUID_4, "Name4");
         RESUME_DUMMY = ResumeTestData.addResumeTestData(UUID_DUMMY, "dummy");
+
     }
 
     public AbstractStorageTest(Storage storage) {
@@ -135,7 +138,6 @@ public abstract class AbstractStorageTest {
         List<Resume> expected = Arrays.stream(new Resume[]{RESUME_1, RESUME_2, RESUME_3}).toList();
         //assertArrayEquals(expected, actual);
         Assertions.assertArrayEquals(actual.toArray(), expected.toArray());
-
     }
 
     @Test

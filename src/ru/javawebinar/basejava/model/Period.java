@@ -1,15 +1,22 @@
 package ru.javawebinar.basejava.model;
 
+import jakarta.xml.bind.annotation.XmlAccessType;
+import jakarta.xml.bind.annotation.XmlAccessorType;
+import jakarta.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import ru.javawebinar.basejava.util.DateUtil;
+import ru.javawebinar.basejava.util.LocalDateAdapter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.Objects;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Period  implements Serializable {
 
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private final LocalDate startDate;
+    @XmlJavaTypeAdapter(LocalDateAdapter.class)
     private final LocalDate endDate;
 
     public Period(int startYear, Month startMonth){
