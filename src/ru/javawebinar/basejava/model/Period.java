@@ -15,9 +15,12 @@ import java.util.Objects;
 public class Period  implements Serializable {
 
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    private final LocalDate startDate;
+    private LocalDate startDate;
     @XmlJavaTypeAdapter(LocalDateAdapter.class)
-    private final LocalDate endDate;
+    private LocalDate endDate;
+
+    public Period() {
+    }
 
     public Period(int startYear, Month startMonth){
         this(DateUtil.of(startYear, startMonth), DateUtil.NOW);
