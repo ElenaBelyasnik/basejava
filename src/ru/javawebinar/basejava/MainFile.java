@@ -12,7 +12,6 @@ import java.util.stream.Stream;
 
 public class MainFile {
     public static void main(String[] args) throws IOException {
-/*
         String filePath = ".\\.gitignore";
 
         File file = new File(filePath);
@@ -35,8 +34,7 @@ public class MainFile {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-*/
-        printTree(Paths.get("./src/ru/javawebinar/basejava"), "");
+        // printTree(Paths.get("./src/ru/javawebinar/basejava"), "");
     }
 
     public static void printTree(Path path, String mask) throws IOException {

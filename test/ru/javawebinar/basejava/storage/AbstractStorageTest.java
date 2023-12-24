@@ -40,7 +40,6 @@ public abstract class AbstractStorageTest {
         RESUME_3 = ResumeTestData.addResumeTestData(UUID_3, "Name3");
         RESUME_4 = ResumeTestData.addResumeTestData(UUID_4, "Name4");
         RESUME_DUMMY = ResumeTestData.addResumeTestData(UUID_DUMMY, "dummy");
-
     }
 
     public AbstractStorageTest(Storage storage) {

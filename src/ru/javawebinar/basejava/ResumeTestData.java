@@ -1,13 +1,31 @@
 package ru.javawebinar.basejava;
 
 import ru.javawebinar.basejava.model.*;
+import ru.javawebinar.basejava.storage.PathStorage;
+import ru.javawebinar.basejava.storage.serializer.XmlStreamSerializer;
 
+import java.io.*;
 import java.time.Month;
 
 public class ResumeTestData {
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
         Resume resume = addResumeTestData(null, "Григорий Кислин");
 
+        //resumeOutput(resume);
+        resumeXmlOutput(resume, "C:\\TEMP\\resume.xml");
+    }
+
+    public static void resumeXmlOutput(Resume resume, String fileName) {
+        XmlStreamSerializer xmlStreamSerializer = new XmlStreamSerializer();
+
+        try (OutputStream os = new FileOutputStream(fileName)) {
+            xmlStreamSerializer.doWrite(resume, os);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());  
+        }
+    }
+
+    public static void resumeOutput (Resume resume) {
         // output...
         System.out.println(resume);
 
@@ -45,6 +63,7 @@ public class ResumeTestData {
         resume.addContact(ContactType.STATCKOVERFLOW, "https://stackoverflow.com/users/548473");
         resume.addContact(ContactType.HOME_PAGE, "http://gkislin.ru/");
 
+/*
         resume.addSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
         resume.addSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
         resume.addSection(SectionType.ACHIEVEMENT, new ListSection(
@@ -101,6 +120,7 @@ public class ResumeTestData {
         );
 
         resume.addSection(SectionType.EDUCATION, new OrganizationSection(education1, education2));
+*/
 
         return resume;
     }

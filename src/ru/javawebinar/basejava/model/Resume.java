@@ -45,6 +45,17 @@ public class Resume implements Comparable<Resume>, Serializable {
         return uuid;
     }
 
+    public String getFullName() {
+        return fullName;
+    }
+    public Map<ContactType, String> getContacts() {
+        return contacts;
+    }
+
+    public Map<SectionType, Section> getSections() {
+        return sections;
+    }
+
     public String getContact(ContactType type) {
         return contacts.get(type);
     }
@@ -61,9 +72,8 @@ public class Resume implements Comparable<Resume>, Serializable {
         sections.put(type, section);
     }
 
-    public String getFullName() {
-        return fullName;
-    }
+
+
 
     @Override
     public boolean equals(Object o) {
@@ -91,6 +101,4 @@ public class Resume implements Comparable<Resume>, Serializable {
         int cmp = fullName.compareTo(o.fullName);
         return cmp != 0 ? cmp : uuid.compareTo(o.uuid);
     }
-
-
 }
