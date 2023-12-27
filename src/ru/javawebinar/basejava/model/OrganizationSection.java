@@ -32,6 +32,8 @@ public class OrganizationSection extends Section{
 
 
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -71,7 +71,7 @@ public class Organization  implements Serializable {
             Objects.requireNonNull(title, "title must not be null");
             this.period = period;
             this.title = title;
-            this.description = description;
+            this.description = description == null ? "" : description;
         }
 
         public Period getPeriod() {
