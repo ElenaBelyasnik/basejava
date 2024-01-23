@@ -19,6 +19,7 @@ public class MainConcurrency {
         };
         thread0.start();
 
+        // создание потока при помощи лямбда-выражения и интерфейса Runnable
         new Thread(() -> System.out.println(Thread.currentThread().getName()
                 + ", " + Thread.currentThread().getState())).start();
 
@@ -44,10 +45,11 @@ public class MainConcurrency {
             }
         });
         System.out.println(counter);
+        //LazySeingleton.getInstance();
     }
 
-//    private synchronized void inc() {
-    private void inc() {
+    private synchronized void inc() {
+ //   private void inc() {
  //       synchronized (MainConcurrency.class) {
  //       double a = Math.sin(13.);
  //       synchronized (this) {
