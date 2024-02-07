@@ -30,16 +30,15 @@ public class MainStream {
     }
 
     public static int minValue(int[] values) {
-        return IntStream.of(values).distinct().sorted().reduce(0, (a, b) -> (10 * a + b));
+        return IntStream.of(values)
+                .distinct()
+                .sorted()
+                .reduce(0, (a, b) -> (10 * a + b));
     }
 
     public static List<Integer> oddOrEven(List<Integer> integers) {
-        return integers
-                .stream()
-                .filter(integers
-                        .stream()
-                        .mapToInt(Integer::intValue)
-                        .sum() % 2 != 0 ? n -> n % 2 == 0 : n -> n % 2 != 0)
-                .collect(Collectors.toList());
+        Map<Boolean, List<Integer>> map = integers.stream()
+                .collect(partitioningBy(x -> x % 2 == 0, toList()));
+        return map.get(map.get(false).size() % 2 != 0);
     }
 }
