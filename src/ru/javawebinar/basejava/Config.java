@@ -7,7 +7,7 @@ public class Config {
     private static final Config INSTANCE = new Config();
     protected static final File PROPS = new File("config\\resumes.properties");
     private Properties props = new Properties();
-    private File storageDir;
+    private final File storageDir;
 
     public static Config get() {
         return INSTANCE;

@@ -55,6 +55,7 @@ public class ResumeTestData {
             resume = new Resume(uuid, fullName);
         }
 
+/*
         resume.addContact(ContactType.PHONE, "+7(921) 855-0482");
         resume.addContact(ContactType.SKYPE, "skype:grigory.kislin");
         resume.addContact(ContactType.MAIL, "gkislin@yandex.ru");
@@ -120,6 +121,7 @@ public class ResumeTestData {
         );
 
         resume.addSection(SectionType.EDUCATION, new OrganizationSection(education1, education2));
+*/
         return resume;
     }
 }
