@@ -8,6 +8,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Stream;
@@ -84,6 +85,7 @@ public class FileStorage extends AbstractStorage<File> {
     protected List<Resume> doGetAll() {
         File[] files = getFilesList();
         List<Resume> list = new ArrayList<>(files.length);
+        Collections.sort(list);
         for (File file : files) {
             list.add(doGet(file));
         }

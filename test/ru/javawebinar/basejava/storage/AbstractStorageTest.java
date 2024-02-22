@@ -11,24 +11,24 @@ import ru.javawebinar.basejava.ResumeTestData;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.Month;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public abstract class AbstractStorageTest {
-//    protected static final File STORAGE_DIR = new File("..\\basejava\\storage");
-//    protected static final File STORAGE_DIR = new File("C:\\ELENA\\basejava\\storage");
+   //protected static final File STORAGE_DIR = new File("..\\basejava\\storage");
+    //    protected static final File STORAGE_DIR = new File("C:\\ELENA\\basejava\\storage");
     protected static final File STORAGE_DIR = Config.get().getStorageDir();
+
+
 
     protected Storage storage;
 
-    private static final String UUID_1 = "uuid1";
-    private static final String UUID_2 = "uuid2";
-    private static final String UUID_3 = "uuid3";
-    private static final String UUID_4 = "uuid4";
-    private static final String UUID_DUMMY = "dummy";
+    private static final String UUID_1 = UUID.randomUUID().toString();
+    private static final String UUID_2 = UUID.randomUUID().toString();
+    private static final String UUID_3 = UUID.randomUUID().toString();
+    private static final String UUID_4 = UUID.randomUUID().toString();
+    private static final String UUID_DUMMY = UUID.randomUUID().toString();
 
     private static final Resume RESUME_1;
     private static final Resume RESUME_2;
@@ -92,9 +92,9 @@ public abstract class AbstractStorageTest {
         String exceptionMessage = "Resume " + RESUME_1.getUuid() + " already exists";
         ExistStorageException thrown = assertThrows(ExistStorageException.class,
                 () -> storage.save(RESUME_1));
-
         assertEquals(exceptionMessage, thrown.getMessage());
     }
+
 
     @Test
     void delete() throws IOException {
@@ -134,11 +134,27 @@ public abstract class AbstractStorageTest {
 
     @Test
     void getAll() {
+/*
+        List<Resume> list = storage.getAllSorted();
+        Collections.sort(list);
+        assertEquals(3, list.size());
+        List<Resume> sortedResumes = Arrays.asList(RESUME_1, RESUME_2, RESUME_3);
+        Collections.sort(sortedResumes);
+
+        assertEquals(list, sortedResumes);
+*/
+
+        Comparator<Resume> RESUME_COMPARATOR = Comparator.comparing(Resume::getUuid);
+
         List<Resume> actual = storage.getAllSorted();
+        actual.sort(RESUME_COMPARATOR);
         assertEquals(3, actual.size());
-        List<Resume> expected = Arrays.stream(new Resume[]{RESUME_1, RESUME_2, RESUME_3}).toList();
+        List<Resume> expected = new ArrayList<>(Arrays.stream(new Resume[]{RESUME_1, RESUME_2, RESUME_3}).toList());
+        expected.sort(RESUME_COMPARATOR);
         //assertArrayEquals(expected, actual);
+
         Assertions.assertArrayEquals(actual.toArray(), expected.toArray());
+
     }
 
     @Test
