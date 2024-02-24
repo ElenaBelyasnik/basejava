@@ -13,8 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SqlStorage implements Storage {
-    public final SqlHelper sqlHelper;
-    private String psUuid;
+    private final SqlHelper sqlHelper;
 
     public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
         sqlHelper = new SqlHelper(() -> DriverManager.getConnection(dbUrl, dbUser, dbPassword));
@@ -34,7 +33,6 @@ public class SqlStorage implements Storage {
                     if (ps.executeUpdate() == 0) {
                         throw new NotExistStorageException(r.getUuid());
                     }
-                    ;
                     return null;
                 });
     }
@@ -85,8 +83,8 @@ public class SqlStorage implements Storage {
                     ResultSet rs = ps.executeQuery();
                     List<Resume> resumes = new ArrayList<>();
                     while (rs.next()) {
-                        resumes.add(new Resume(rs.getString("uuid")
-                                , rs.getString("full_name")));
+                        resumes.add(new Resume(rs.getString("uuid"),
+                                rs.getString("full_name")));
                     }
                     return resumes;
                 });
@@ -98,9 +96,5 @@ public class SqlStorage implements Storage {
             ResultSet rs = ps.executeQuery();
             return rs.next() ? rs.getInt(1) : 0;
         });
-    }
-
-    public String getPsUuid() {
-        return psUuid;
     }
 }

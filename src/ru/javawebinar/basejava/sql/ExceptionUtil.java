@@ -5,7 +5,6 @@ import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ExceptionUtil {
@@ -14,8 +13,8 @@ public class ExceptionUtil {
 
     public static StorageException convertException(SQLException e) {
         // https://www.postgresql.org/docs/current/errcodes-appendix.html
-        if(e instanceof PSQLException) {
-            if(e.getSQLState().equals("23505")) {
+        if (e instanceof PSQLException) {
+            if (e.getSQLState().equals("23505")) {
                 return new ExistStorageException(null);
             }
         }
@@ -24,8 +23,8 @@ public class ExceptionUtil {
 
     public static StorageException convertException(SQLException e, Resume r) {
         // https://www.postgresql.org/docs/current/errcodes-appendix.html
-        if(e instanceof PSQLException) {
-            if(e.getSQLState().equals("23505")) {
+        if (e instanceof PSQLException) {
+            if (e.getSQLState().equals("23505")) {
                 return new ExistStorageException(r.getUuid());
             }
         }
