@@ -43,11 +43,11 @@ public class SqlStorage implements Storage {
                 ps -> {
                     ps.setString(1, r.getUuid());
                     ps.setString(2, r.getFullName());
-                    try {
+//                                        try {
                         ps.execute();
-                    } catch (SQLException e) {
-                        throw ExceptionUtil.convertException(e, r);
-                    }
+//                    } catch (SQLException e) {
+//                        throw ExceptionUtil.convertException(e, r);
+//                    }
                     return null;
                 });
     }
