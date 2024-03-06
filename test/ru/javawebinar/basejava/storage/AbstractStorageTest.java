@@ -65,6 +65,10 @@ public abstract class AbstractStorageTest {
     void update() {
         //Resume updatingResume = new Resume(UUID_1, "New Name");
         Resume updatingResume = ResumeTestData.addResumeTestData(UUID_1, "New Name");
+        RESUME_1.addContact(ContactType.MAIL, "mail1@google.com");
+        RESUME_1.addContact(ContactType.SKYPE, "NewSkype");
+        RESUME_1.addContact(ContactType.MOBILE, "+7 921 222-22-22");
+
         storage.update(updatingResume);
         //assertSame(updatingResume, storage.get(UUID_1));
         assertEquals(updatingResume, storage.get(UUID_1));
