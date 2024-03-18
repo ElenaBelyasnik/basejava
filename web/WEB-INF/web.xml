@@ -3,6 +3,15 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd"
          version="4.0">
+    <!-- https://www.baeldung.com/tomcat-utf-8 -->
+    <filter>
+        <filter-name>characterSetFilter</filter-name>
+        <filter-class>ru.javawebinar.basejava.web.CharacterSetFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>characterSetFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <servlet>
         <servlet-name>resumeServlet</servlet-name>
