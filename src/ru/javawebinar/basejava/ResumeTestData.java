@@ -1,8 +1,8 @@
 package ru.javawebinar.basejava;
 
 import ru.javawebinar.basejava.model.*;
-import ru.javawebinar.basejava.storage.PathStorage;
 import ru.javawebinar.basejava.storage.serializer.XmlStreamSerializer;
+import ru.javawebinar.basejava.util.JsonParser;
 
 import java.io.*;
 import java.time.Month;
@@ -11,8 +11,8 @@ public class ResumeTestData {
     public static void main(String[] args) {
         Resume resume = addResumeTestData(null, "Григорий Кислин");
 
-        //resumeOutput(resume);
-        resumeXmlOutput(resume, "C:\\TEMP\\resume.xml");
+        resumeOutput(resume);
+        //resumeXmlOutput(resume, "C:\\TEMP\\resume.xml");
     }
 
     public static void resumeXmlOutput(Resume resume, String fileName) {
@@ -64,8 +64,10 @@ public class ResumeTestData {
         resume.addContact(ContactType.STATCKOVERFLOW, "https://stackoverflow.com/users/548473");
         resume.addContact(ContactType.HOME_PAGE, "http://gkislin.ru/");
 
-/*
+
+
         resume.addSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
+        /*
         resume.addSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
         resume.addSection(SectionType.ACHIEVEMENT, new ListSection(
                 "Организация команды и успешная реализация Java проектов для сторонних заказчиков: приложения автопарк на стеке Spring Cloud/микросервисы, система мониторинга показателей спортсменов на Spring Boot, участие в проекте МЭШ на Play-2, многомодульный Spring Boot + Vaadin проект для комплексных DIY смет"
@@ -92,8 +94,10 @@ public class ResumeTestData {
                 , "Отличное знание и опыт применения концепций ООП, SOA, шаблонов проектрирования, архитектурных шаблонов, UML, функционального программирования"
                 , "Родной русский, английский \"upper intermediate\""
         ));
+*/
 
 
+/*
         Organization organization1 = new Organization("Java Online Projects"
                 , "http://javaops.ru/"
                 , new Organization.Position(new Period(2013, Month.of(10))
@@ -122,6 +126,7 @@ public class ResumeTestData {
 
         resume.addSection(SectionType.EDUCATION, new OrganizationSection(education1, education2));
 */
+
         return resume;
     }
 }

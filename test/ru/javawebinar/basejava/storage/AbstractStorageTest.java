@@ -55,6 +55,8 @@ public abstract class AbstractStorageTest {
         storage.save(RESUME_3);
     }
 
+
+
     @Test
     void clear() throws IOException {
         storage.clear();
@@ -146,6 +148,7 @@ public abstract class AbstractStorageTest {
         Assertions.assertArrayEquals(actual.toArray(), expected.toArray());
 
     }
+
 
     @Test
     void size() {
