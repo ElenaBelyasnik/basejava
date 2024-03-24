@@ -65,9 +65,9 @@ public class ResumeTestData {
         resume.addContact(ContactType.HOME_PAGE, "http://gkislin.ru/");
 
 
+        resume.addSection(SectionType.OBJECTIVE,
+                new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
 
-        resume.addSection(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного обучения по Java Web и Enterprise технологиям"));
-        /*
         resume.addSection(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная логика, креативность, инициативность. Пурист кода и архитектуры."));
         resume.addSection(SectionType.ACHIEVEMENT, new ListSection(
                 "Организация команды и успешная реализация Java проектов для сторонних заказчиков: приложения автопарк на стеке Spring Cloud/микросервисы, система мониторинга показателей спортсменов на Spring Boot, участие в проекте МЭШ на Play-2, многомодульный Spring Boot + Vaadin проект для комплексных DIY смет"
@@ -94,8 +94,6 @@ public class ResumeTestData {
                 , "Отличное знание и опыт применения концепций ООП, SOA, шаблонов проектрирования, архитектурных шаблонов, UML, функционального программирования"
                 , "Родной русский, английский \"upper intermediate\""
         ));
-*/
-
 
 /*
         Organization organization1 = new Organization("Java Online Projects"

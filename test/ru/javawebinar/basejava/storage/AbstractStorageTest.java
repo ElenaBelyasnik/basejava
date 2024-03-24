@@ -20,7 +20,6 @@ public abstract class AbstractStorageTest {
     //    protected static final File STORAGE_DIR = new File("C:\\ELENA\\basejava\\storage");
     protected static final File STORAGE_DIR = Config.get().getStorageDir();
 
-
     protected Storage storage;
 
     private static final String UUID_1 = UUID.randomUUID().toString();
@@ -54,8 +53,6 @@ public abstract class AbstractStorageTest {
         storage.save(RESUME_2);
         storage.save(RESUME_3);
     }
-
-
 
     @Test
     void clear() throws IOException {
@@ -91,6 +88,7 @@ public abstract class AbstractStorageTest {
         assertSize(4);
         assertGet(RESUME_4);
     }
+
 
     @Test
     public void saveExistException() {

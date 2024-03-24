@@ -2,10 +2,7 @@ package ru.javawebinar.basejava.storage;
 
 
 import ru.javawebinar.basejava.exception.NotExistStorageException;
-import ru.javawebinar.basejava.model.ContactType;
-import ru.javawebinar.basejava.model.Resume;
-import ru.javawebinar.basejava.model.Section;
-import ru.javawebinar.basejava.model.SectionType;
+import ru.javawebinar.basejava.model.*;
 import ru.javawebinar.basejava.sql.SqlHelper;
 import ru.javawebinar.basejava.util.JsonParser;
 
@@ -52,16 +49,16 @@ public class SqlStorage implements Storage {
     @Override
     public void save(Resume r) {
         sqlHelper.transactionalExecute(conn -> {
-            try (PreparedStatement ps = conn.prepareStatement(
-                    "INSERT INTO resume (uuid,full_name) VALUES (?,?)")) {
-                ps.setString(1, r.getUuid());
-                ps.setString(2, r.getFullName());
-                ps.execute();
-            }
-            insertContacts(conn, r);
-            //insertSections();
-            return null;
-        });
+                    try (PreparedStatement ps = conn.prepareStatement("INSERT INTO resume (uuid, full_name) VALUES (?,?)")) {
+                        ps.setString(1, r.getUuid());
+                        ps.setString(2, r.getFullName());
+                        ps.execute();
+                    }
+                    insertContacts(conn, r);
+                    insertSections(conn, r);
+                    return null;
+                }
+        );
     }
 
     @Override
@@ -205,7 +202,7 @@ public class SqlStorage implements Storage {
         }
     }
 
-    private void deleteContacts(Connection conn, Resume r) throws SQLException{
+    private void deleteContacts(Connection conn, Resume r) throws SQLException {
         deleteAttributes(conn, r, "DELETE FROM contact WHERE resume_uuid = ?");
     }
 
@@ -233,6 +230,7 @@ public class SqlStorage implements Storage {
             ps.executeBatch();
         }
     }
+
     private void insertSections(Connection conn, Resume r) throws SQLException {
         try (PreparedStatement ps = conn.prepareStatement(
                 "INSERT INTO section (resume_uuid, type, content) VALUES (?, ?, ?)")) {
