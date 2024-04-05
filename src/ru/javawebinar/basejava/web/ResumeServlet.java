@@ -23,8 +23,12 @@ public class ResumeServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request,
-                         HttpServletResponse response) throws IOException {
+                         HttpServletResponse response) throws IOException, ServletException {
+        request.setAttribute("resumes", storage.getAllSorted());
+        request.getRequestDispatcher("/WEB-INF/jsp/list.jsp").forward(request, response);
+
         //response.setHeader("Content-Type", "text/html; charset=UTF-8");
+/*
         Writer writer = response.getWriter();
         writer.write(
                 """
@@ -55,6 +59,7 @@ public class ResumeServlet extends HttpServlet {
                 </body>
                 </html>
                 """);
+*/
     }
 
     @Override
