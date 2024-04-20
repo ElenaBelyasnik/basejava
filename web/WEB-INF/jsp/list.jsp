@@ -16,15 +16,19 @@
         <tr>
             <th>Имя</th>
             <th>Email</th>
+            <th></th>
+            <th></th>
         </tr>
         <jsp:useBean id="resumes" scope="request" type="java.util.List"/>
         <c:forEach items="${resumes}" var="resume">
             <jsp:useBean id="resume" type="ru.javawebinar.basejava.model.Resume"/>
             <tr>
-                <td><a href="resume?uuid=${resume.uuid}">${resume.fullName}
+                <td><a href="resume?uuid=${resume.uuid}&action=view">${resume.fullName}
                 </a></td>
-                <td>${resume.getContact(ContactType.MAIL)}
+                <td><%=ContactType.MAIL.toHtml(resume.getContact(ContactType.MAIL))%>
                 </td>
+                <td><a href="resume?uuid=${resume.uuid}&action=delete">Delete <img src="img/trash.png"></a></td>
+                <td><a href="resume?uuid=${resume.uuid}&action=edit">Edit <img src="img/pencil.png"></a></td>
             </tr>
         </c:forEach>
     </table>
