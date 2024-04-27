@@ -22,16 +22,16 @@ public class TestData {
         R3 = new Resume(UUID_3, "Name3");
         R4 = new Resume(UUID_4, "Name4");
 
-        R1.addContact(ContactType.MAIL, "mail1@ya.ru");
-        R1.addContact(ContactType.PHONE, "11111");
+        R1.setContact(ContactType.MAIL, "mail1@ya.ru");
+        R1.setContact(ContactType.PHONE, "11111");
 
-        R4.addContact(ContactType.PHONE, "44444");
-        R4.addContact(ContactType.SKYPE, "Skype");
+        R4.setContact(ContactType.PHONE, "44444");
+        R4.setContact(ContactType.SKYPE, "Skype");
 
-        R1.addSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
-        R1.addSection(SectionType.PERSONAL, new TextSection("Personal data"));
-        R1.addSection(SectionType.ACHIEVEMENT, new ListSection("Achivment11", "Achivment12", "Achivment13"));
-        R1.addSection(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL", "JavaScript"));
+        R1.setSection(SectionType.OBJECTIVE, new TextSection("Objective1"));
+        R1.setSection(SectionType.PERSONAL, new TextSection("Personal data"));
+        R1.setSection(SectionType.ACHIEVEMENT, new ListSection("Achivment11", "Achivment12", "Achivment13"));
+        R1.setSection(SectionType.QUALIFICATIONS, new ListSection("Java", "SQL", "JavaScript"));
 
         Organization organization1 = new Organization("Java Online Projects"
                 , "http://javaops.ru/"
@@ -45,7 +45,7 @@ public class TestData {
                 , "Старший разработчик (backend)", "Проектирование и разработка онлайн платформы управления проектами Wrike (Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная аутентификация, авторизация по OAuth1, OAuth2, JWT SSO.")
         );
 
-        R1.addSection(SectionType.EXPERIENCE, new OrganizationSection(organization1, organization2));
+        R1.setSection(SectionType.EXPERIENCE, new OrganizationSection(organization1, organization2));
 
         Organization education1 = new Organization("Coursera"
                 , "http://javaops.ru/"
@@ -59,10 +59,10 @@ public class TestData {
                 , "Курс 'Объектно-ориентированный анализ ИС. Концептуальное моделирование на UML.'", "")
         );
 
-        R1.addSection(SectionType.EDUCATION, new OrganizationSection(education1, education2));
+        R1.setSection(SectionType.EDUCATION, new OrganizationSection(education1, education2));
 
 
-        R2.addContact(ContactType.SKYPE, "skype2");
-        R2.addContact(ContactType.PHONE, "22222");
+        R2.setContact(ContactType.SKYPE, "skype2");
+        R2.setContact(ContactType.PHONE, "22222");
     }
 }

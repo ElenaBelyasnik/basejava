@@ -2,7 +2,9 @@ package ru.javawebinar.basejava.model;
 
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
+import ru.javawebinar.basejava.util.DateUtil;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,6 +12,12 @@ import java.util.List;
 import java.util.Objects;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Organization  implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+
+    public static final Organization EMPTY = new Organization("", "", Position.EMPTY);
+
+
     private Link homePage;
     private List<Position> positions;
 
@@ -60,6 +68,8 @@ public class Organization  implements Serializable {
     }
     @XmlAccessorType(XmlAccessType.FIELD)
     public static class Position  implements Serializable {
+        public static final Position EMPTY =
+                new Position(new Period(DateUtil.NOW, DateUtil.NOW), "","");
         private Period period;
         private String title;
         private String description;
