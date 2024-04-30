@@ -19,13 +19,14 @@
         <input type="hidden" name="uuid" value="${resume.uuid}">
         <h1>Имя:</h1>
         <dl>
-            <input type="text" name="fullName" size=55 value="${resume.fullName}">
+            <input type="text" name="fullName" size=55 value="${resume.fullName}" required>
         </dl>
         <h2>Контакты:</h2>
         <c:forEach var="type" items="<%=ContactType.values()%>">
             <dl>
                 <dt>${type.title}</dt>
-                <dd><input type="text" name="${type.name()}" size=30 value="${resume.getContact(type)}"></dd>
+                <dd><input type="text" name="${type.name()}" size=30
+                           value="${resume.getContact(type)}"></dd>
             </dl>
         </c:forEach>
         <hr>
@@ -45,37 +46,46 @@
                               rows=5><%=String.join("\n", ((ListSection) section).getItems())%></textarea>
                 </c:when>
                 <c:when test="${type=='EXPERIENCE' || type=='EDUCATION'}">
-                    <c:forEach var="org" items="<%=((OrganizationSection) section).getOrganizations()%>"
+                    <c:forEach var="org"
+                               items="<%=((OrganizationSection) section).getOrganizations()%>"
                                varStatus="counter">
                         <dl>
                             <dt>Название учереждения:</dt>
-                            <dd><input type="text" name='${type}' size=100 value="${org.homePage.name}"></dd>
+                            <dd><input type="text" name='${type}' size=100
+                                       value="${org.homePage.name}"></dd>
                         </dl>
                         <dl>
                             <dt>Сайт учереждения:</dt>
-                            <dd><input type="text" name='${type}url' size=100 value="${org.homePage.url}"></dd>
+                            <dd><input type="text" name='${type}url' size=100
+                                       value="${org.homePage.url}"></dd>
                             </dd>
                         </dl>
                         <br>
                         <div style="margin-left: 30px">
                             <c:forEach var="pos" items="${org.positions}">
-                                <jsp:useBean id="pos" type="ru.javawebinar.basejava.model.Organization.Position"/>
+                                <jsp:useBean id="pos"
+                                             type="ru.javawebinar.basejava.model.Organization.Position"/>
                                 <dl>
                                     <dt>Начальная дата:</dt>
                                     <dd>
-                                        <input type="text" name="${type}${counter.index}startDate" size=10
-                                               value="<%=DateUtil.format(pos.getPeriod().getStartDate())%>" placeholder="MM/yyyy">
+                                        <input type="text" name="${type}${counter.index}startDate"
+                                               size=10
+                                               value="<%=DateUtil.format(pos.getPeriod().getStartDate())%>"
+                                               placeholder="MM/yyyy">
                                     </dd>
                                 </dl>
                                 <dl>
                                     <dt>Конечная дата:</dt>
                                     <dd>
-                                        <input type="text" name="${type}${counter.index}endDate" size=10
-                                               value="<%=DateUtil.format(pos.getPeriod().getEndDate())%>" placeholder="MM/yyyy">
+                                        <input type="text" name="${type}${counter.index}endDate"
+                                               size=10
+                                               value="<%=DateUtil.format(pos.getPeriod().getEndDate())%>"
+                                               placeholder="MM/yyyy">
                                 </dl>
                                 <dl>
                                     <dt>Должность:</dt>
-                                    <dd><input type="text" name='${type}${counter.index}title' size=75
+                                    <dd><input type="text" name='${type}${counter.index}title'
+                                               size=75
                                                value="${pos.title}">
                                 </dl>
                                 <dl>
@@ -90,7 +100,15 @@
             </c:choose>
         </c:forEach>
         <button type="submit">Сохранить</button>
-        <button onclick="window.history.back()">Отменить</button>
+        <%--        <button onclick="window.history.back()">Отменить</button>--%>
+        <button onclick="cancelChanges()">Отменить</button>
+        <script>
+            function cancelChanges() {
+                if (confirm('Вы уверены, что хотите отменить изменения?')) {
+                    window.history.back();
+                }
+            }
+        </script>
     </form>
 </section>
 <jsp:include page="fragments/footer.jsp"/>

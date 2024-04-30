@@ -1,7 +1,7 @@
 <%@ page import="ru.javawebinar.basejava.model.Resume" %>
 <%@ page import="java.util.List" %>
 <%@ page import="ru.javawebinar.basejava.model.ContactType" %>
-<%@ page contentType="text/html;charset=UTF-8"%>
+<%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html>
 <head>
@@ -29,8 +29,10 @@
                 </a></td>
                 <td><%=ContactType.MAIL.toHtml(resume.getContact(ContactType.MAIL))%>
                 </td>
-                <td><a href="resume?uuid=${resume.uuid}&action=delete">Delete <img src="img/Ionic-Ionicons-Trash-outline.16.png"></a></td>
-                <td><a href="resume?uuid=${resume.uuid}&action=edit">Edit <img src="img/pencil.png"></a></td>
+                <td><a href="resume?uuid=${resume.uuid}&action=delete">Delete <img
+                        src="img/Ionic-Ionicons-Trash-outline.16.png"></a></td>
+                <td><a href="resume?uuid=${resume.uuid}&action=edit">Edit <img src="img/pencil.png"></a>
+                </td>
             </tr>
         </c:forEach>
     </table>

@@ -14,7 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class ResumeServlet extends HttpServlet {
 
@@ -56,8 +59,18 @@ public class ResumeServlet extends HttpServlet {
             } else {
                 switch (type) {
                     case OBJECTIVE, PERSONAL -> r.setSection(type, new TextSection(value));
-                    case ACHIEVEMENT, QUALIFICATIONS ->
-                            r.setSection(type, new ListSection(value.split("\\n")));
+                    case ACHIEVEMENT, QUALIFICATIONS -> {
+                        List<String> items = Arrays.asList(value.split("\\n"));
+                        List<Optional<String>> optionalList = items.stream()
+                                .map(Optional::ofNullable).toList();
+                        List<String> notEmptyItems = new ArrayList<>(optionalList.stream()
+                                .filter(Optional::isPresent)
+                                .map(Optional::get)
+                                .map(String::trim)
+                                .toList());
+                        notEmptyItems.removeIf(s -> s.equals(""));
+                        r.setSection(type, new ListSection(notEmptyItems));
+                    }
                     case EDUCATION, EXPERIENCE -> {
                         List<Organization> orgs = new ArrayList<>();
                         String[] urls = request.getParameterValues(type.name() + "url");
@@ -65,11 +78,11 @@ public class ResumeServlet extends HttpServlet {
                             String name = values[i];
                             if (!HtmlUtil.isEmpty(name)) {
                                 List<Organization.Position> positions = new ArrayList<>();
-                                String pfx = type.name() + i;
-                                String[] startDates = request.getParameterValues(pfx + "startDate");
-                                String[] endDates = request.getParameterValues(pfx + "endDate");
-                                String[] titles = request.getParameterValues(pfx + "title");
-                                String[] descriptions = request.getParameterValues(pfx + "description");
+                                String prefix = type.name() + i;
+                                String[] startDates = request.getParameterValues(prefix + "startDate");
+                                String[] endDates = request.getParameterValues(prefix + "endDate");
+                                String[] titles = request.getParameterValues(prefix + "title");
+                                String[] descriptions = request.getParameterValues(prefix + "description");
                                 for (int j = 0; j < titles.length; j++) {
                                     if (!HtmlUtil.isEmpty(titles[j])) {
                                         LocalDate startDate = DateUtil.parse(startDates[j]);
