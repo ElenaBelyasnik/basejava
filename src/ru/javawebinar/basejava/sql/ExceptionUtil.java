@@ -21,7 +21,7 @@ public class ExceptionUtil {
         return new StorageException(e);
     }
 
-/*    public static StorageException convertException(SQLException e, Resume r) {
+    public static StorageException convertException(SQLException e, Resume r) {
         // https://www.postgresql.org/docs/current/errcodes-appendix.html
         if (e instanceof PSQLException) {
             if (e.getSQLState().equals("23505")) {
@@ -29,6 +29,6 @@ public class ExceptionUtil {
             }
         }
         return new StorageException(e);
-    }*/
+    }
 
 }

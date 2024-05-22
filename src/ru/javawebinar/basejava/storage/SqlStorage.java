@@ -2,7 +2,9 @@ package ru.javawebinar.basejava.storage;
 
 
 import ru.javawebinar.basejava.exception.NotExistStorageException;
+import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.*;
+import ru.javawebinar.basejava.sql.ExceptionUtil;
 import ru.javawebinar.basejava.sql.SqlHelper;
 import ru.javawebinar.basejava.util.JsonParser;
 
@@ -52,7 +54,12 @@ public class SqlStorage implements Storage {
                     try (PreparedStatement ps = conn.prepareStatement("INSERT INTO resume (uuid, full_name) VALUES (?,?)")) {
                         ps.setString(1, r.getUuid());
                         ps.setString(2, r.getFullName());
-                        ps.execute();
+                        try {
+                            ps.execute();
+                        } catch (SQLException e) {
+                            conn.rollback();
+                            throw ExceptionUtil.convertException(e, r);
+                        }
                     }
                     insertContacts(conn, r);
                     insertSections(conn, r);
